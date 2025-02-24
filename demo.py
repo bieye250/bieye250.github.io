@@ -18,7 +18,8 @@ def get_cookies(session):
 def get_captcha_text(captcha_image):
     # 将图片转换为灰度图像以便 OCR 识别
     image = Image.open(BytesIO(captcha_image)).convert("L")
-    return pytesseract.image_to_string(image, config="--psm 6").strip()
+    image = image.point(lambda x: 255 if x > 128 else 0)  # 二值化
+    return pytesseract.image_to_string(img, config="--psm 6").strip()
 
 def login():
     session = requests.Session();
@@ -26,5 +27,6 @@ def login():
     captcha_response = session.get(CAPTCHA_URL)
     captcha_code = get_captcha_text(captcha_response.content)
     print(f"识别的验证码：{captcha_code}")
+    print(f"session: {get_cookies(session)}")
 
 session = login()
