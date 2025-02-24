@@ -14,4 +14,4 @@ jobs:
     - name: Install Dependencies
       run: pip install requests pillow pytesseract
     - name: Run python script
-      run: echo "hello world"
+      run: python demo.py
