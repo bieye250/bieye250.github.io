@@ -4,6 +4,7 @@ import pytesseract
 from PIL import Image
 from io import BytesIO
 import ddddocr
+import json
 ocr = ddddocr.DdddOcr()
 
 # 配置参数
@@ -49,7 +50,9 @@ def login():
     }
     # 发送登录请求
     print(form_data)
-    response = session.post(POST_URL, headers=headers, data=form_data)
+    json_str = json.dumps(form_data, ensure_ascii=False)
+    print("将要发送的JSON数据：\n", json_str)
+    response = session.post(POST_URL, headers=headers, data=json_str)
     print(response.text)
 
 session = login()
