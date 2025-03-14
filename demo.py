@@ -3,9 +3,12 @@ import requests
 import pytesseract
 from PIL import Image
 from io import BytesIO
+import ddddocr
+from selenium import webdriver
+ocr = ddddocr.DdddOcr()
 
 # 配置参数
-LOGIN_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/doLogin"
+LOGIN_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/edit"
 CAPTCHA_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/getVerify"
 
 # 获取登录后的 Cookie
@@ -15,17 +18,23 @@ def get_cookies(session):
     return cookies
 
 # 获取验证码文本
-def get_captcha_text(captcha_image):
-    # 将图片转换为灰度图像以便 OCR 识别
-    image = Image.open(BytesIO(captcha_image)).convert("L")
-    image = image.point(lambda x: 255 if x > 128 else 0)  # 二值化
-    return pytesseract.image_to_string(image, config="--psm 6").strip()
+def get_captcha_text(img_url):
+    # 通过接口请求url地址，并保存在本地
+    r = requests.get(img_url)
+    with open('1111.jpg', 'wb+') as f:  
+    f.write(r.content)
+    # 再次读取图片信息
+    with open('1111.jpg', 'rb')as f2:
+    img_bytes = f2.read()
+    # 通过ddddocr进行识别验证码
+    res = ocr.classification(img_bytes)
+    return res
 
 def login():
     session = requests.Session();
     # 首次获取验证码（可能需要携带特定参数）
     captcha_response = session.get(CAPTCHA_URL)
-    captcha_code = get_captcha_text(captcha_response.content)
+    captcha_code = get_captcha_text(CAPTCHA_URL)
     print(f"识别的验证码：{captcha_code}")
     print(f"session: {get_cookies(session)}")
 
