@@ -10,6 +10,9 @@ ocr = ddddocr.DdddOcr()
 LOGIN_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/edit?pid=2502242402"
 CAPTCHA_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/getVerify"
 POST_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/checkClassScore"
+headers = {
+    'Content-Type': 'application/json;charset=utf-8'
+}
 
 # 获取登录后的 Cookie
 def get_cookies(session):
@@ -45,7 +48,7 @@ def login():
         # 可能需要其他隐藏字段如csrf token
     }
     # 发送登录请求
-    response = session.post(POST_URL, data=form_data)
+    response = session.post(POST_URL, headers=headers, data=form_data)
     print(response.text)
 
 session = login()
