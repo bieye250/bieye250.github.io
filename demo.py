@@ -4,7 +4,6 @@ import pytesseract
 from PIL import Image
 from io import BytesIO
 import ddddocr
-from selenium import webdriver
 ocr = ddddocr.DdddOcr()
 
 # 配置参数
