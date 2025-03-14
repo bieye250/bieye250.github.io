@@ -7,8 +7,9 @@ import ddddocr
 ocr = ddddocr.DdddOcr()
 
 # 配置参数
-LOGIN_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/edit"
+LOGIN_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/edit?pid=2502242402"
 CAPTCHA_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/getVerify"
+POST_URL = "https://xxcx.hljea.org.cn/JWWebCxzxNew/examType/checkClassScore"
 
 # 获取登录后的 Cookie
 def get_cookies(session):
@@ -35,6 +36,16 @@ def login():
     captcha_response = session.get(CAPTCHA_URL)
     captcha_code = get_captcha_text(CAPTCHA_URL)
     print(f"识别的验证码：{captcha_code}")
-    print(f"session: {get_cookies(session)}")
+    # 构造登录参数（需通过浏览器抓包确认字段名）
+    form_data = {
+        "authCode": captcha_code,
+        "exam_type_id": "2502242402",
+        "ksh": "102135000002874",
+        "xm": "陶家畅"
+        # 可能需要其他隐藏字段如csrf token
+    }
+    # 发送登录请求
+    response = session.post(POST_URL, data=form_data)
+    print(response)
 
 session = login()
