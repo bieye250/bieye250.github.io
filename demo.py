@@ -46,6 +46,6 @@ def login():
     }
     # 发送登录请求
     response = session.post(POST_URL, data=form_data)
-    print(response)
+    print(response.text)
 
 session = login()
