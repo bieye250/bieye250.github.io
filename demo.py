@@ -41,13 +41,14 @@ def login():
     print(f"识别的验证码：{captcha_code}")
     # 构造登录参数（需通过浏览器抓包确认字段名）
     form_data = {
-        "authCode": captcha_code,
+        "authCode": ""+captcha_code+"",
         "exam_type_id": "2502242402",
         "ksh": "102135000002874",
         "xm": "陶家畅"
         # 可能需要其他隐藏字段如csrf token
     }
     # 发送登录请求
+    print(form_data)
     response = session.post(POST_URL, headers=headers, data=form_data)
     print(response.text)
 
