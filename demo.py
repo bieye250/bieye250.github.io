@@ -22,10 +22,10 @@ def get_captcha_text(img_url):
     # 通过接口请求url地址，并保存在本地
     r = requests.get(img_url)
     with open('1111.jpg', 'wb+') as f:  
-    f.write(r.content)
+        f.write(r.content)
     # 再次读取图片信息
     with open('1111.jpg', 'rb')as f2:
-    img_bytes = f2.read()
+        img_bytes = f2.read()
     # 通过ddddocr进行识别验证码
     res = ocr.classification(img_bytes)
     return res
