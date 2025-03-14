@@ -49,7 +49,6 @@ def login():
         # 可能需要其他隐藏字段如csrf token
     }
     # 发送登录请求
-    print(form_data)
     json_str = json.dumps(form_data, ensure_ascii=False)
     print("将要发送的JSON数据：\n", json_str)
     response = session.post(POST_URL, headers=headers, data=json_str)
