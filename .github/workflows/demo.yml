@@ -12,6 +12,6 @@ jobs:
       with:
         python-version: '3.9'
     - name: Install Dependencies
-      run: sudo apt install tesseract-ocr & pip install requests pillow pytesseract
+      run: sudo apt install tesseract-ocr & pip install requests pillow pytesseract ddddocr
     - name: Run python script
       run: python demo.py
